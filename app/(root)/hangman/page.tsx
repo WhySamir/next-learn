@@ -5,15 +5,7 @@ import { useEffect, useState } from "react";
 
 const page = () => {
   const alphabet = "QWERTYUIOPASDFGHJKL;ZXCVBNM".split("");
-  const guessWords = [
-    "Animal",
-    "Instagram",
-    "Skribbl",
-    "Gauchan",
-    "Sports",
-    "Movies",
-    "Songs",
-  ];
+  const guessWords = ["Instagram", "Skribbl", "Gauchan", "Sports", "Songs"];
   const [selectedWord, setSelectedWord] = useState(() => {
     const randomIndex = Math.floor(Math.random() * guessWords.length);
     return guessWords[randomIndex];
@@ -80,7 +72,7 @@ const page = () => {
               : `No of Chances Left: ${noofGuess}`}
           </h1>{" "}
           <div className=" flex flex-wrap gap-2 justify-center cursor-pointer">
-            {alphabet.map((letter: string) => {
+            {alphabet.map((letter: string, idx: number) => {
               const isGuessed = guessedLetters?.includes(letter);
               const isCorrect = isGuessed && isLetterInWord(letter);
 
@@ -92,7 +84,7 @@ const page = () => {
                   : "bg-[#323132] ";
               return (
                 <AlphaCards
-                  key={letter}
+                  key={idx || letter}
                   className={cardColorClass}
                   onClick={(e: any) => {
                     e.preventDefault();
@@ -118,9 +110,9 @@ const page = () => {
             })}
           </div>{" "}
           <div className="lg:mt-15 mx-5 items-center  flex gap-4">
-            {selectedWord.split("").map((words: string) => (
+            {selectedWord.split("").map((words: string, idx: number) => (
               <div
-                key={words}
+                key={idx || words}
                 className="w-8 h-10 border-b-4 border-black text-4xl text-center"
               >
                 {guessedLetters && guessedLetters.includes(words.toUpperCase())
@@ -145,6 +137,7 @@ const page = () => {
           )}{" "}
           {noofGuess <= 0 && (
             <>
+              <h1>The word is {selectedWord}</h1>
               <h1 className="m-3 text-2xl">
                 Oops!{" "}
                 <span
