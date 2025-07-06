@@ -5,11 +5,18 @@ import { useEffect, useState } from "react";
 
 const page = () => {
   const alphabet = "QWERTYUIOPASDFGHJKL;ZXCVBNM".split("");
-  const guessWords = ["Instagram", "Skribbl", "Gauchan", "Sports", "Songs"];
-  const [selectedWord, setSelectedWord] = useState(() => {
-    const randomIndex = Math.floor(Math.random() * guessWords.length);
-    return guessWords[randomIndex];
-  });
+  // const guessWords = ["Instagram", "Skribbl", "Sports", "Songs"];
+  const guessWords:any = {
+    "Food":["WaterMelon","Avocado","Gundruk","Dumplings"],
+    "Place":["wakanda","ekantakuna"],
+    "Country":["tunisia","Tajikistan","Uzbekistan","Ecuador"],
+    "Animal":["Dinosaur","Eagle","Tigress","Platypus"],
+    "Chocolate":["Toblerone","Hershey",""],
+    }
+  const categories =['Food','Place','Country','Animal','Chocolate']
+  const [category,setCategory] = useState<string|null>()
+  const [selectedWord, setSelectedWord] =useState<string>('')
+  
   const [guessedLetters, setGuessedLetters] = useState<string[] | null>([]);
   const [isWordGuessed, setIsWordGuessed] = useState(false);
   // const [noofGuess, setnofofGuess] = useState<number>(selectedWord.length);
@@ -26,6 +33,17 @@ const page = () => {
   const isLetterInWord = (letter: string) => {
     return selectedWord.toUpperCase().includes(letter);
   };
+  useEffect(() => {
+  if (category) {
+    const words = guessWords[category];
+    const randomIndex = Math.floor(Math.random() * words.length);
+    setSelectedWord(words[randomIndex]);
+    setGuessedLetters([]);
+    setIsWordGuessed(false);
+    setnofofGuess(7);
+  }
+}, [category]);
+
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -49,23 +67,31 @@ const page = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [guessedLetters, noofGuess, isWordGuessed]);
-
-  const resetGame = () => {
-    const randomIndex = Math.floor(Math.random() * guessWords.length);
-    const newWord = guessWords[randomIndex];
+const resetGame = () => {
+  if (category) {
+    const words = guessWords[category];
+    const randomIndex = Math.floor(Math.random() * words.length);
+    const newWord = words[randomIndex];
 
     setGuessedLetters([]);
     setIsWordGuessed(false);
-    // setnofofGuess(newWord.length);
     setnofofGuess(7);
     setSelectedWord(newWord);
-  };
+  }
+};
 
   return (
     <div className="lg:mt-12 flex flex-col  lg:flex-row w-full lg:justify-center lg:items-center">
       {" "}
       <div className=" w-full lg:w-1/2  h-full lg:h-[80vh] lg:mx-3">
         <div className="flex flex-col space-y-4 mx-3">
+          <h1 className="lg:text-2xl w-full text-center">Category:{category}</h1>
+          <div  className="flex  w-full gap-3">
+          {categories.map((cat:any,idx:number)=>{
+            return(
+            <button key={idx||cat} className={`px-4 ${category!=null? "hidden":"block"} py-2 bg-blue-500 text-white rounded`} onClick={()=>setCategory(cat)} >{cat}</button>
+          )})}
+          </div>
           <h1 className="lg:text-4xl ">
             {noofGuess <= 0 && !isWordGuessed
               ? "Game Over!"
@@ -109,7 +135,7 @@ const page = () => {
               );
             })}
           </div>{" "}
-          <div className="lg:mt-15 mx-5 items-center  flex gap-4">
+          <div className="lg:mt-2 mx-5 items-center  flex gap-4">
             {selectedWord.split("").map((words: string, idx: number) => (
               <div
                 key={idx || words}
@@ -139,7 +165,7 @@ const page = () => {
           )}{" "}
           {noofGuess <= 0 && (
             <>
-              <h1>The word is {selectedWord}</h1>
+              <h1>The word was {selectedWord}</h1>
               <h1 className="m-3 text-2xl">
                 Oops!{" "}
                 <span
