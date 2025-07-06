@@ -113,7 +113,9 @@ const page = () => {
             {selectedWord.split("").map((words: string, idx: number) => (
               <div
                 key={idx || words}
-                className="w-8 h-10 border-b-4 border-black text-4xl text-center"
+                className={`w-8 ${
+                  words === "" ? "" : "border-b-4 border-black"
+                } h-10 border-b-4 border-black text-4xl text-center`}
               >
                 {guessedLetters && guessedLetters.includes(words.toUpperCase())
                   ? words
