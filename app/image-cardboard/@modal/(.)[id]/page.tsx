@@ -13,8 +13,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <Modal>
-      <div className="relative w-[500px] h-[300px] mb-4">
+    <Modal id={selectedImg.id}>
+      <div className="relative w-120 h-80 mb-4">
         <Image
           className="object-cover rounded-md"
           src={selectedImg.img}

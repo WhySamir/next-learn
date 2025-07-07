@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const Modal = ({ children }: { children: React.ReactNode }) => {
+const Modal = ({ children, id }: { children: React.ReactNode; id: number }) => {
   const router = useRouter();
 
   // close modal on Escape key
@@ -24,16 +24,17 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
 
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation(); // prevent closing if modal itself is clicked
+    router.back();
   };
 
   return (
     <div
       onClick={handleBackdropClick}
-      className="fixed inset-0 z-50 bg-neutral-900 opacity-90 flex items-center justify-center"
+      className="fixed inset-0 z-50 bg-neutral-900 opacity-90 flex  items-center justify-center"
     >
       <div
         onClick={stopPropagation}
-        className="bg-white rounded-lg p-6 max-w-3xl w-full relative"
+        className="bg-white rounded-lg  w-120    relative"
       >
         {children}
       </div>
