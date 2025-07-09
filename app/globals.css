@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* .image-slider-container {
+  margin: 0 auto;
+  width: 400px;
+  height: 100px;
+}
+.image-slider-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+} */
+
+.image-slider-container .slick-prev:before,
+.image-slider-container .slick-next:before {
+  color: black;
+}

@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 const layout = ({
   children,
   UserAnalytics,
@@ -21,8 +23,12 @@ const layout = ({
       {/* subnavigation:notification/archived */}
       <div className="flex">
         <div className="flex-col flex">
-          {UserAnalytics}
-          {Revenue}
+          <Suspense fallback={<p>Loading UserAnalaytics</p>}>
+            {" "}
+            {UserAnalytics}
+          </Suspense>
+
+          <Suspense fallback={<p>Loading Revenue</p>}>{Revenue}</Suspense>
         </div>
         {Notification}
       </div>

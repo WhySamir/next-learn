@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Hero from "./components/Hero";
+import { Themeprovider } from "./components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +18,10 @@ export default function RootLayout({
       <body>
         {
           <>
-            <Hero />
-            {children}
+            <Themeprovider>
+              <Hero />
+              {children}
+            </Themeprovider>
           </>
         }
       </body>
