@@ -1,0 +1,6 @@
+authentication with clerk
+npm install @clerk/nextjs
+set env 
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
+CLERK_SECRET_KEY=...
+ClerkProvider and middlware in layout and outside appp
